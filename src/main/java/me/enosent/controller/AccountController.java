@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +30,15 @@ public class AccountController {
     @Autowired private AccountService accountService;
     @Autowired private AccountRepository repository;
 
+    // not working
+    /*  {
+        "status": 415,
+        "error": "Unsupported Media Type",
+        "exception": "org.springframework.web.HttpMediaTypeNotSupportedException",
+        "message": "Content type 'text/plain;charset=UTF-8' not supported",
+        "path": "/accounts"
+        }
+     */
     @RequestMapping(value = "/accounts", method = RequestMethod.POST)
     public ResponseEntity saveAccount(@Valid @RequestBody AccountDto.Request request, BindingResult result) {
         if(result.hasErrors()) {
@@ -43,6 +51,7 @@ public class AccountController {
         return new ResponseEntity<>(modelMapper.map(newAccount, AccountDto.Response.class), HttpStatus.CREATED);
     }
 
+    // working!
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     public ResponseEntity getAccounts() {
         List<Account> accounts = repository.findAll();
@@ -51,6 +60,7 @@ public class AccountController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    // working!
     @RequestMapping(value = "/accounts/{id}", method = RequestMethod.GET)
     public ResponseEntity getAccount(@PathVariable int id){
         Account account = repository.findOne(id);
@@ -60,4 +70,8 @@ public class AccountController {
 
         return new ResponseEntity<>(modelMapper.map(account, AccountDto.Response.class), HttpStatus.OK);
     }
+
+    //TODO PUT & PATCH
+
+    //TODO DELETE
 }
