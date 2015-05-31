@@ -32,7 +32,6 @@ public class Account {
     private String username;
 
     @NotNull
-    @Min(6)
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -23,8 +23,7 @@ public class AccountDto {
         @Size(min = 6)
         private String username;
 
-        @NotNull
-        @Min(6)
+        @NotBlank
         private String password;
     }
 
